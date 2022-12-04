@@ -7,17 +7,25 @@ void Day1() {
 
   File file = File(filePath);
   List fileContent = file.readAsLinesSync();
-  List elvesInventory = [];
+  List<int> elvesInventory = [];
   var count = 0;
   fileContent.forEach(
     (element) {
       if (element != '') {
-        count += element as int;
+        count += int.parse(element);
       } else {
         elvesInventory.add(count);
         count = 0;
       }
     },
   );
-  print(elvesInventory);
+  elvesInventory.sort((a, b) => b.compareTo(a));
+  var answerPart1 = elvesInventory.first;
+  var answerPart2 = 0;
+  for (int i = 0; i < 3; i++) {
+    answerPart2 += elvesInventory[i];
+  }
+
+  print(answerPart1);
+  print(answerPart2);
 }
