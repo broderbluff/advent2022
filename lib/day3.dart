@@ -6,24 +6,42 @@ void Day3() {
   var filePath = p.join(Directory.current.path, 'assets/inputs', 'day3.txt');
 
   File file = File(filePath);
-  List lines = file.readAsLinesSync();
-  var sum = 0;
+  List backpacks = file.readAsLinesSync();
+  int sumPartOne = 0;
   const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-  for (String line in lines) {
-    int lineLength = line.length;
+  for (String backpack in backpacks) {
+    int totalBackpackSize = backpack.length;
 
-    double halfLength = lineLength / 2;
+    double halfTheBackpack = totalBackpackSize / 2;
 
-    String compartmentA = line.substring(0, halfLength.toInt());
-    String compartmentB = line.substring(halfLength.toInt(), lineLength);
-    for (var i = 0; i < compartmentA.length; i++) {
-      if (compartmentA.contains(compartmentB[i])) {
-        print(compartmentB[i]);
-        sum += alphabet.indexOf(compartmentB[i]) + 1;
+    String fistCompartment = backpack.substring(0, halfTheBackpack.toInt());
+    String secondCompartment =
+        backpack.substring(halfTheBackpack.toInt(), totalBackpackSize);
+    for (var i = 0; i < fistCompartment.length; i++) {
+      if (fistCompartment.contains(secondCompartment[i])) {
+        sumPartOne += alphabet.indexOf(secondCompartment[i]) + 1;
         break;
       }
     }
   }
-  print(sum);
+
+  print(sumPartOne);
+
+  int sumPartTwo = 0;
+
+  for (var i = 0; i < backpacks.length; i += 3) {
+    List firstElfBackpack = backpacks[i].split('');
+    String secondElfBackpack = backpacks[i + 1];
+    String thirdElfBackpack = backpacks[i + 2];
+
+    for (var item in firstElfBackpack) {
+      if (secondElfBackpack.contains(item) && thirdElfBackpack.contains(item)) {
+        sumPartTwo += alphabet.indexOf(item) + 1;
+        break;
+      }
+    }
+  }
+
+  print(sumPartTwo);
 }
